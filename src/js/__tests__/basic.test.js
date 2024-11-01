@@ -2,6 +2,7 @@ import Bowman from "../classes/Bowman";
 import Character from "../classes/Character";
 import ErrorRepository from "../classes/ErrorRepository";
 import Phonecontrol from "../classes/Phonecontrol";
+import Settings from "../classes/Settings";
 import Team from "../classes/Team";
 import Validator from "../classes/Validator";
 import orderByProps from "../functions/orderByProps";
@@ -174,16 +175,40 @@ describe("Работа с ошибками", () => {
   });
 
   test("Значение должно быть строкой", () => {
-    expect(() => {errorRepository.addError(1, 1)}).toThrow("Значение должно быть строкой");
-  }); // почему здесь expect принимат колбэк 
+    expect(() => {
+      errorRepository.addError(1, 1);
+    }).toThrow("Значение должно быть строкой");
+  }); // почему здесь expect принимат колбэк
 
   test("Метод translate возвращает текст ошибки по коду", () => {
     expect(errorRepository.translate(100)).toBe("Кривые руки");
   }); // а здесь просто инстанс
 
   test("Метод translate возвращает 'Unknown error' при получении отсутствующего кода", () => {
-    expect(
-      errorRepository.translate(101)
-    ).toBe('Unknown error');
+    expect(errorRepository.translate(101)).toBe("Unknown error");
   });
+});
+
+describe("Работа с настройками", () => {
+  let settings;
+  beforeEach(() => {
+    settings = new Settings();
+    settings.changeSettings('music', 'pop')
+  });
+  test('Map хранит дефолтные настройки', () => {
+    expect(settings.defaultSettings.get('theme')).toBe('dark')
+    expect(settings.defaultSettings.get('music')).toBe('trance')
+    expect(settings.defaultSettings.get('difficulty')).toBe('easy')
+  })
+  test('Не допускается установка настроект не входящих в список настроек', () => {
+    expect(()=>settings.changeSettings('themeXXX', 'light')).toThrow()
+    expect(()=>settings.changeSettings('theme', 'lightXXX')).toThrow()
+  })
+  test('Map хранит пользовательские настройки', () => {
+    expect(settings.userSettings.get('music')).toBe('pop')
+  })
+  test('Настройки можно менять', () => {
+    settings.settings
+    expect(settings.resSettings.get('music')).toBe('pop')
+  })
 });
