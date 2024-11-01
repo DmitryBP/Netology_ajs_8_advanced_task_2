@@ -212,3 +212,4 @@ describe("Работа с настройками", () => {
     expect(settings.resSettings.get('music')).toBe('pop')
   })
 });
+
