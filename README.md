@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/m72ko0irdh0mxs3h?svg=true)](https://ci.appveyor.com/project/DmitryBP/netology-ajs-8-advanced-task-3)
+
 ## Map (задача со звёздочкой)
 
 **Важно**: данная задача не является обязательной 
